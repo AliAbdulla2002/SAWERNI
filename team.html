@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - SAWERNI</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="your-favicon-url">
+
+    <link rel="icon" type="image/x-icon" href="C:\V1 - website\image\SAWERNI LOGO.ico">
+
+    <style>
+        /* ===== LOGO CAROUSEL STYLES ===== */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 0;
+        }
+        
+        .logo-carousel {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            margin-right: 12px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .logo-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        /* UOB Logo - starts visible */
+        .logo-slide.uob-logo-slide {
+            transform: rotateY(0deg);
+            z-index: 2;
+        }
+        
+        /* SAWERNI Logo - starts hidden */
+        .logo-slide.sawerni-logo-slide {
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+        
+        /* Flipped states */
+        .logo-carousel.flipped .uob-logo-slide {
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+        
+        .logo-carousel.flipped .sawerni-logo-slide {
+            transform: rotateY(360deg);
+            z-index: 2;
+        }
+        
+        /* Pulse glow effect on flip */
+        .logo-carousel.flipping .logo-slide img {
+            animation: logoGlow 0.6s ease-in-out;
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 0px rgba(237, 128, 18, 0));
+            }
+            50% {
+                filter: drop-shadow(0 0 15px rgba(237, 128, 18, 0.8));
+            }
+        }
+        
+        /* Continuous auto-rotation */
+        .logo-carousel.auto-rotate .uob-logo-slide {
+            animation: continuousFlip1 3s ease-in-out infinite;
+        }
+        
+        .logo-carousel.auto-rotate .sawerni-logo-slide {
+            animation: continuousFlip2 3s ease-in-out infinite;
+        }
+        
+        @keyframes continuousFlip1 {
+            0%, 40% {
+                transform: rotateY(0deg);
+                z-index: 2;
+            }
+            50%, 90% {
+                transform: rotateY(180deg);
+                z-index: 1;
+            }
+            100% {
+                transform: rotateY(0deg);
+                z-index: 2;
+            }
+        }
+        
+        @keyframes continuousFlip2 {
+            0%, 40% {
+                transform: rotateY(180deg);
+                z-index: 1;
+            }
+            50%, 90% {
+                transform: rotateY(360deg);
+                z-index: 2;
+            }
+            100% {
+                transform: rotateY(180deg);
+                z-index: 1;
+            }
+        }
+        
+        /* Brand text styling */
+        .brand-text {
+            color: #d4720a;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #d4720a, #ed8012);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+        }
+        
+        /* Responsive logo carousel */
+        @media (max-width: 768px) {
+            .logo-carousel {
+                width: 35px;
+                height: 35px;
+                margin-right: 8px;
+            }
+            
+            .brand-text {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-carousel {
+                width: 30px;
+                height: 30px;
+                margin-right: 6px;
+            }
+            
+            .brand-text {
+                font-size: 18px;
+            }
+        }
+        
+        /* ===== TEAM PAGE STYLES ===== */
+        .team-header {
+            background: linear-gradient(135deg, #d4720a 0%, #ed8012 100%);
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        /* Clean Team Cards */
+        .team-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(212, 114, 10, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(237, 128, 18, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(212, 114, 10, 0.15);
+        }
+        
+        /* Team Image Container */
+        .team-img-container {
+            padding: 30px 30px 0 30px;
+            text-align: center;
+        }
+        
+        .team-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 20px rgba(212, 114, 10, 0.2);
+            display: block;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #ed8012 0%, #d4720a 100%);
+        }
+        
+        /* Team Content */
+        .team-content {
+            padding: 20px 30px 30px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Role Badge */
+        .team-role-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+        
+        .supervisor-badge {
+            background: rgba(255, 204, 0, 0.15);
+            color: #d48800;
+        }
+        
+        .student-badge {
+            background: rgba(237, 128, 18, 0.15);
+            color: #ed8012;
+        }
+        
+        .team-name {
+            color: #d4720a;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .team-title {
+            color: #ed8012;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .team-bio {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+            flex: 1;
+        }
+        
+        /* Responsibilities */
+        .team-responsibilities {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .responsibility-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .responsibility-item i {
+            color: #ed8012;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        /* Contact Links */
+        .team-contact {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: auto;
+        }
+        
+        .contact-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            color: #ed8012;
+        }
+        
+        .contact-link:hover {
+            transform: translateY(-3px);
+            background: #ed8012;
+            color: white;
+            box-shadow: 0 5px 15px rgba(237, 128, 18, 0.2);
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 80px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .team-img {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .team-content {
+                padding: 15px 20px 25px;
+            }
+            
+            .team-name {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-section {
+                padding: 50px 0;
+            }
+            
+            .team-img {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .team-content {
+                padding: 15px 20px 20px;
+            }
+            
+            .team-name {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-main">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" id="navbarBrand">
+                <!-- Logo Carousel Container -->
+                <div class="logo-carousel auto-rotate" id="logoCarousel">
+                    <!-- UOB Logo Slide -->
+                    <div class="logo-slide uob-logo-slide">
+                        <img src="C:\V1 - website\image\UOB LOGO.png" 
+                             alt="UOB Logo">
+                    </div>
+                    <!-- SAWERNI Logo Slide -->
+                    <div class="logo-slide sawerni-logo-slide">
+                        <img src="C:\V1 - website\image\SAWERNI LOGO.png" 
+                             alt="SAWERNI Logo">
+                    </div>
+                </div>
+                <span class="brand-text">SAWERNI</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-2"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="project.html"><i class="fas fa-project-diagram me-2"></i>Project</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="demo.html"><i class="fas fa-play-circle me-2"></i>Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="team.html"><i class="fas fa-users me-2"></i>Team</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Team Header -->
+    <section class="team-header">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-3">Our Team</h1>
+            <p class="lead mb-0">Meet the team behind SAWERNI</p>
+        </div>
+    </section>
+
+    <!-- Team Members -->
+    <section class="team-section">
+        <div class="container">
+            
+            <!-- Row 1: Supervisor + 2 Students -->
+            <div class="row justify-content-center">
+                
+                <!-- Supervisor -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="C:\V1 - website\image\DR.GHASSAN.jpg" alt="Dr. Ghassan Mohamed Alkoureiti" class="team-img">
+                        </div>
+                        <div class="team-content">
+                            <span class="team-role-badge supervisor-badge">Supervisor</span>
+                            <h3 class="team-name">DR. GHASSAN MOHAMMED ANWAR AL KOUREITI</h3>
+                            <div class="team-title">Assistant Professor - Information Systems</div>
+                            <p class="team-bio">
+                                Dr. Ghassan Alkoureiti is an Assistant Professor of Information Systems at the University of Bahrain, specializing in advanced IS courses and curriculum development. He has coordinated the internship program and supervised numerous senior projects. His research interests include enterprise systems, IT governance, blockchain, socio-material IS practices, and game development. He holds certifications in CEH, PCAP, and COBIT5, and earned a BSc from the University of Bahrain (2009), an MSc from George Washington University (2013), and a PhD from the University of Lancaster (2018).
+                            </p>
+                            <div class="team-contact">
+                                <a href="mailto:gkoureiti@uob.edu.bh" class="contact-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="https://cit.uob.edu.bh/faculty/faculty-profile/?faculty=dr-ghassan-mohammed-alkoureiti" target="_blank" class="contact-link" title="University Profile">
+                                    <i class="fas fa-university"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/ghassan-mohd-53579518/" target="_blank" class="contact-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="C:\V1 - website\image\ALI ALASFOOR.jpeg" alt="ALI JAAFAR ABDALI ALASFOOR" class="team-img">
+                        </div>
+                        <div class="team-content">
+                            <span class="team-role-badge student-badge">Student</span>
+                            <h3 class="team-name">ALI JAAFAR ABDALI ALASFOOR</h3>
+                            <div class="team-title">Bachelor of Science in Information Systems</div>
+                            <p class="team-bio">
+                                [Brief bio about Student 1 - their role in the project, 
+                                technical skills, and main contributions]
+                            </p>
+
+                            <div class="team-contact">
+                                <a href="mailto:alialasfoorw@gmail.com" class="contact-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/ali-alasfoor-6b9688346/" target="_blank" class="contact-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="C:\V1 - website\image\HASSAN ALI.jpg" alt="HASAN ALI JASIM ALI" class="team-img">
+                        </div>
+                        <div class="team-content">
+                            <span class="team-role-badge student-badge">Student</span>
+                            <h3 class="team-name">HASAN ALI JASIM ALI</h3>
+                            <div class="team-title">Bachelor of Science in Information Systems</div>
+                            <p class="team-bio">
+                                [Brief bio about Student 2 - their role in the project, 
+                                technical skills, and main contributions]
+                            </p>
+                            
+                            <div class="team-contact">
+                                <a href="mailto:HassanAlsurh@gmail.com" class="contact-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/hasan-ali-74612731b/" target="_blank" class="contact-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Row 2: Student 3 (Centered) -->
+            <div class="row justify-content-center">
+                
+                <!-- Student 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-img-container">
+                            <img src="C:\V1 - website\image\Ali Saleh.jpg" alt="ALI SALEH MAHDI ABDULLA" class="team-img">
+                        </div>
+                        <div class="team-content">
+                            <span class="team-role-badge student-badge">Student</span>
+                            <h3 class="team-name">ALI SALEH MAHDI ABDULLA</h3>
+                            <div class="team-title">Bachelor of Science in Information Systems</div>
+                            <p class="team-bio">
+                                [Brief bio about Student 3 - their role in the project, 
+                                technical skills, and main contributions]
+                            </p>
+                            
+                            <div class="team-contact">
+                                <a href="mailto:alisaleh.contact@gmail.com" class="contact-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="https://github.com/AliAbdulla2002" target="_blank" class="contact-link" title="GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/alisaleh-abdullah/" target="_blank" class="contact-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="footer-logo-section">
+                            <div class="footer-logo">
+                                <img src="C:\V1 - website\image\SAWERNI LOGO.png" 
+                                     alt="SAWERNI Logo" loading="lazy">
+                                <span>SAWERNI</span>
+                            </div>
+                            <p class="footer-description">
+                                SAWERNI a dedicated community platform connecting photographers and videographers with clients in Bahrain. Discover talent, view stunning portfolios, and book the perfect professional for your special moments.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="footer-contact">
+                            <h5>Project Team</h5>
+                            <div class="contact-item">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <span>3 Students + Supervisor</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <div>
+                                    <span>Senior Project</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="footer-social">
+                            <h5>Connect</h5>
+                            <div class="social-icons">
+                                <a href="https://www.youtube.com/channel/UCR_zhY6zEnnAeLBr8uanXhw" target="_blank" class="social-icon youtube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="mailto:sawerni.bh@gmail.com" class="social-icon email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                            <div class="mt-3">
+                                <small>sawerni.bh@gmail.com</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="copyright">
+                            &copy; <span id="currentYear"></span> SAWERNI All Rights Reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="footer-links">
+                            <a href="team.html">Team</a>
+                            <a href="project.html">Project</a>
+                            <a href="demo.html">Demo</a>
+                            <a href="index.html">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // ===== LOGO CAROUSEL SCRIPT =====
+        const logoCarousel = document.getElementById('logoCarousel');
+        const navbarBrand = document.getElementById('navbarBrand');
+        
+        if (logoCarousel && navbarBrand) {
+            // Click on logo to manually flip
+            logoCarousel.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Remove auto-rotate temporarily
+                logoCarousel.classList.remove('auto-rotate');
+                logoCarousel.classList.add('flipping');
+                
+                // Toggle flipped state
+                logoCarousel.classList.toggle('flipped');
+                
+                // Remove flipping class after animation
+                setTimeout(() => {
+                    logoCarousel.classList.remove('flipping');
+                }, 600);
+                
+                // Resume auto-rotate after 3 seconds
+                setTimeout(() => {
+                    if (!logoCarousel.classList.contains('auto-rotate')) {
+                        logoCarousel.classList.add('auto-rotate');
+                    }
+                }, 3000);
+            });
+            
+            // Pause auto-rotation on hover
+            logoCarousel.addEventListener('mouseenter', function() {
+                logoCarousel.classList.remove('auto-rotate');
+            });
+            
+            logoCarousel.addEventListener('mouseleave', function() {
+                setTimeout(() => {
+                    logoCarousel.classList.add('auto-rotate');
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
