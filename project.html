@@ -601,7 +601,7 @@
                 </button>
                 
                 <div class="d-flex justify-content-center flex-wrap gap-4 mt-4">
-                    <span class="text-muted"><i class="fas fa-file-alt me-2"></i> [Page Count] Pages</span>
+                    <span class="text-muted"><i class="fas fa-file-alt me-2"></i> 74 Pages</span>
                     <span class="text-muted"><i class="fas fa-diagram-project me-2"></i> System Architecture</span>
                     <span class="text-muted"><i class="fas fa-code me-2"></i> Source Code</span>
                     <span class="text-muted"><i class="fas fa-chart-bar me-2"></i> Evaluation</span>
@@ -795,12 +795,14 @@
             });
         });
         
-        function downloadProjectReport() {
-    // Create a temporary hidden anchor element
+function downloadProjectReport() {
     const link = document.createElement('a');
-    link.href = 'SAWERNI - A PHOTOGRAPHY AND VIDEOGRAPHY PLATFORM.pdf'; // Path to your file
-    link.download = 'Project_Report.pdf';    // Optional: Save file as this name
-    
+    link.href = 'SAWERNI - A PHOTOGRAPHY AND VIDEOGRAPHY PLATFORM.pdf';
+    link.download = 'SAWERNI - A PHOTOGRAPHY AND VIDEOGRAPHY PLATFORM.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
     // Append to body, click it, and remove it
     document.body.appendChild(link);
     link.click();
